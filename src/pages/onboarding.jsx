@@ -35,21 +35,21 @@ const Onboarding = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center mt-40">
-      <h2 className="gradient-title font-extrabold text-7xl sm:text-8xl tracking-tighter">
+    <div className="flex flex-col items-center justify-center mt-12 sm:mt-24 md:mt-40 px-2">
+      <h2 className="gradient-title font-extrabold text-4xl sm:text-6xl md:text-8xl tracking-tighter text-center">
         I am a...
       </h2>
-      <div className="mt-16 grid grid-cols-2 gap-4 w-full md:px-40">
+      <div className="mt-8 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-lg sm:max-w-none md:px-40">
         <Button
           variant="blue"
-          className="h-36 text-2xl"
+          className="h-28 sm:h-36 text-xl sm:text-2xl"
           onClick={() => handleRoleSelection("candidate")}
         >
           Candidate
         </Button>
         <Button
           variant="destructive"
-          className="h-36 text-2xl"
+          className="h-28 sm:h-36 text-xl sm:text-2xl"
           onClick={() => handleRoleSelection("recruiter")}
         >
           Recruiter

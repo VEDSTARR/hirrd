@@ -93,28 +93,32 @@ const JobListing = () => {
 
   return (
     <div>
-      <h1 className="gradient-title font-extrabold text-6xl sm:text-7xl text-center pb-8">
+      <h1 className="gradient-title font-extrabold text-4xl sm:text-6xl md:text-7xl text-center pb-6 sm:pb-8 px-1">
         Latest Jobs
       </h1>
 
       {/* 🔍 Search */}
       <form
         onSubmit={handleSearch}
-        className="h-14 flex gap-2 items-center mb-3"
+        className="flex flex-col sm:flex-row sm:h-14 gap-2 items-stretch sm:items-center mb-3"
       >
         <Input
           type="text"
           placeholder="Search Jobs by Title.."
           name="search-query"
-          className="h-full flex-1 px-4 text-md"
+          className="h-12 sm:h-full flex-1 min-w-0 px-4 text-md"
         />
-        <Button type="submit" className="h-full sm:w-28" variant="blue">
+        <Button
+          type="submit"
+          className="h-12 sm:h-full w-full sm:w-28 shrink-0"
+          variant="blue"
+        >
           Search
         </Button>
       </form>
 
       {/* 🎯 Filters */}
-      <div className="flex flex-col sm:flex-row gap-2">
+      <div className="flex flex-col sm:flex-row gap-2 min-w-0">
         <Select value={location} onValueChange={(v) => {
           setLocation(v);
           setCurrentPage(1);
@@ -151,7 +155,11 @@ const JobListing = () => {
           </SelectContent>
         </Select>
 
-        <Button variant="destructive" onClick={clearFilters}>
+        <Button
+          variant="destructive"
+          onClick={clearFilters}
+          className="w-full sm:w-auto shrink-0"
+        >
           Clear Filters
         </Button>
       </div>
@@ -180,8 +188,8 @@ const JobListing = () => {
 
           {/* 🔥 Pagination UI */}
           {totalPages > 1 && (
-            <Pagination className="mt-8">
-              <PaginationContent>
+            <Pagination className="mt-8 max-w-full overflow-x-auto">
+              <PaginationContent className="flex-wrap justify-center gap-y-2 sm:flex-nowrap">
 
                 <PaginationItem>
                   <PaginationPrevious

@@ -68,8 +68,8 @@ const CreatedJobs = () => {
 
           {/* 🔥 Pagination */}
           {totalPages > 1 && (
-            <Pagination className="mt-8">
-              <PaginationContent>
+            <Pagination className="mt-8 max-w-full overflow-x-auto">
+              <PaginationContent className="flex-wrap justify-center gap-y-2 sm:flex-nowrap">
 
                 <PaginationItem>
                   <PaginationPrevious

@@ -41,35 +41,40 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
     <Card>
       {loadingHiringStatus && <BarLoader width={"100%"} color="#36d7b7" />}
       <CardHeader>
-        <CardTitle className="flex justify-between font-bold">
-          {isCandidate
-            ? `${application?.job?.title} at ${application?.job?.company?.name}`
-            : application?.name}
+        <CardTitle className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 font-bold">
+          <span className="break-words min-w-0 pr-1">
+            {isCandidate
+              ? `${application?.job?.title} at ${application?.job?.company?.name}`
+              : application?.name}
+          </span>
           <Download
             size={18}
-            className="bg-white text-black rounded-full h-8 w-8 p-1.5 cursor-pointer"
+            className="bg-white text-black rounded-full h-8 w-8 p-1.5 cursor-pointer shrink-0 self-end sm:self-start"
             onClick={handleDownload}
           />
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 flex-1">
-        <div className="flex flex-col md:flex-row justify-between">
-          <div className="flex gap-2 items-center">
-            <BriefcaseBusiness size={15} /> {application?.experience} years of
-            experience
+        <div className="flex flex-col md:flex-row md:flex-wrap gap-3 md:gap-x-6 md:gap-y-2 justify-between">
+          <div className="flex gap-2 items-start min-w-0">
+            <BriefcaseBusiness size={15} className="shrink-0 mt-0.5" />{" "}
+            <span>{application?.experience} years of experience</span>
           </div>
-          <div className="flex gap-2 items-center">
-            <School size={15} />
+          <div className="flex gap-2 items-center min-w-0">
+            <School size={15} className="shrink-0" />
             {application?.education}
           </div>
-          <div className="flex gap-2 items-center">
-            <Boxes size={15} /> Skills: {application?.skills}
+          <div className="flex gap-2 items-start min-w-0 md:min-w-[200px]">
+            <Boxes size={15} className="shrink-0 mt-0.5" />{" "}
+            <span className="break-words">Skills: {application?.skills}</span>
           </div>
         </div>
         <hr />
       </CardContent>
-      <CardFooter className="flex justify-between">
-        <span>{new Date(application?.created_at).toLocaleString()}</span>
+      <CardFooter className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+        <span className="text-sm text-muted-foreground break-all">
+          {new Date(application?.created_at).toLocaleString()}
+        </span>
         {isCandidate ? (
           <span className="capitalize font-bold">
             Status: {application.status}
@@ -79,7 +84,7 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
             onValueChange={handleStatusChange}
             defaultValue={application.status}
           >
-            <SelectTrigger className="w-52">
+            <SelectTrigger className="w-full sm:w-52 max-w-full">
               <SelectValue placeholder="Application Status" />
             </SelectTrigger>
             <SelectContent>

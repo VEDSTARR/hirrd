@@ -88,12 +88,12 @@ const PostJob = () => {
 
   return (
     <div>
-      <h1 className="gradient-title font-extrabold text-5xl sm:text-7xl text-center pb-8">
+      <h1 className="gradient-title font-extrabold text-4xl sm:text-6xl md:text-7xl text-center pb-6 sm:pb-8 px-1">
         Post a Job
       </h1>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 p-4 pb-0"
+        className="flex flex-col gap-4 p-2 sm:p-4 pb-0 min-w-0"
       >
         <Input placeholder="Job Title" {...register("title")} />
         {errors.title && <p className="text-red-500">{errors.title.message}</p>}
@@ -103,13 +103,13 @@ const PostJob = () => {
           <p className="text-red-500">{errors.description.message}</p>
         )}
 
-        <div className="flex gap-4 items-center">
+        <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center min-w-0">
           <Controller
             name="location"
             control={control}
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full sm:flex-1 min-w-0">
                   <SelectValue placeholder="Job Location" />
                 </SelectTrigger>
                 <SelectContent>
@@ -129,7 +129,7 @@ const PostJob = () => {
             control={control}
             render={({ field }) => (
               <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger>
+                <SelectTrigger className="w-full sm:flex-1 min-w-0">
                   <SelectValue placeholder="Company">
                     {field.value
                       ? companies?.find((com) => com.id === Number(field.value))
@@ -149,7 +149,9 @@ const PostJob = () => {
               </Select>
             )}
           />
-          <AddCompanyDrawer fetchCompanies={fnCompanies} />
+          <div className="flex justify-stretch sm:justify-start shrink-0">
+            <AddCompanyDrawer fetchCompanies={fnCompanies} />
+          </div>
         </div>
         {errors.location && (
           <p className="text-red-500">{errors.location.message}</p>
@@ -162,7 +164,9 @@ const PostJob = () => {
           name="requirements"
           control={control}
           render={({ field }) => (
-            <MDEditor value={field.value} onChange={field.onChange} />
+            <div className="w-full min-w-0 overflow-x-auto rounded-md border border-input">
+              <MDEditor value={field.value} onChange={field.onChange} />
+            </div>
           )}
         />
         {errors.requirements && (
@@ -175,7 +179,12 @@ const PostJob = () => {
           <p className="text-red-500">{errorCreateJob?.message}</p>
         )}
         {loadingCreateJob && <BarLoader width={"100%"} color="#36d7b7" />}
-        <Button type="submit" variant="blue" size="lg" className="mt-2">
+        <Button
+          type="submit"
+          variant="blue"
+          size="lg"
+          className="mt-2 w-full sm:w-auto"
+        >
           Submit
         </Button>
       </form>

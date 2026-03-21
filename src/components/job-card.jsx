@@ -57,24 +57,31 @@ const JobCard = ({
       {loadingDeleteJob && (
         <BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
       )}
-      <CardHeader className="flex">
-        <CardTitle className="flex justify-between font-bold">
-          {job.title}
+      <CardHeader className="flex min-w-0">
+        <CardTitle className="flex justify-between items-start gap-2 font-bold w-full min-w-0">
+          <span className="break-words min-w-0 pr-1">{job.title}</span>
           {isMyJob && (
             <Trash2Icon
               fill="red"
               size={18}
-              className="text-red-300 cursor-pointer"
+              className="text-red-300 cursor-pointer shrink-0 mt-0.5"
               onClick={handleDeleteJob}
             />
           )}
         </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 flex-1">
-        <div className="flex justify-between">
-          {job.company && <img src={job.company.logo_url} className="h-6" />}
-          <div className="flex gap-2 items-center">
-            <MapPinIcon size={15} /> {job.location}
+        <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:items-center">
+          {job.company && (
+            <img
+              src={job.company.logo_url}
+              className="h-6 w-auto object-contain"
+              alt=""
+            />
+          )}
+          <div className="flex gap-2 items-center min-w-0 text-sm">
+            <MapPinIcon size={15} className="shrink-0" />{" "}
+            <span className="break-words">{job.location}</span>
           </div>
         </div>
         <hr />

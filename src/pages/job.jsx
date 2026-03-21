@@ -51,29 +51,35 @@ const JobPage = () => {
   }
 
   return (
-    <div className="flex flex-col gap-8 mt-5">
-      <div className="flex flex-col-reverse gap-6 md:flex-row justify-between items-center">
-        <h1 className="gradient-title font-extrabold pb-3 text-4xl sm:text-6xl">
+    <div className="flex flex-col gap-6 sm:gap-8 mt-3 sm:mt-5 min-w-0">
+      <div className="flex flex-col-reverse gap-4 sm:gap-6 md:flex-row justify-between items-start md:items-center">
+        <h1 className="gradient-title font-extrabold pb-1 sm:pb-3 text-3xl sm:text-5xl md:text-6xl break-words max-w-full">
           {job?.title}
         </h1>
-        <img src={job?.company?.logo_url} className="h-12" alt={job?.title} />
+        <img
+          src={job?.company?.logo_url}
+          className="h-10 sm:h-12 shrink-0"
+          alt=""
+        />
       </div>
 
-      <div className="flex justify-between ">
-        <div className="flex gap-2">
-          <MapPinIcon /> {job?.location}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm sm:text-base">
+        <div className="flex gap-2 items-center min-w-0">
+          <MapPinIcon className="shrink-0" size={18} />{" "}
+          <span className="break-words">{job?.location}</span>
         </div>
-        <div className="flex gap-2">
-          <Briefcase /> {job?.applications?.length} Applicants
+        <div className="flex gap-2 items-center">
+          <Briefcase size={18} className="shrink-0" />{" "}
+          {job?.applications?.length} Applicants
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
           {job?.isOpen ? (
             <>
-              <DoorOpen /> Open
+              <DoorOpen size={18} className="shrink-0" /> Open
             </>
           ) : (
             <>
-              <DoorClosed /> Closed
+              <DoorClosed size={18} className="shrink-0" /> Closed
             </>
           )}
         </div>
@@ -103,10 +109,12 @@ const JobPage = () => {
       <h2 className="text-2xl sm:text-3xl font-bold">
         What we are looking for
       </h2>
-      <MDEditor.Markdown
-        source={job?.requirements}
-        className="bg-transparent sm:text-lg" // add global ul styles - tutorial
-      />
+      <div className="w-full min-w-0 overflow-x-auto">
+        <MDEditor.Markdown
+          source={job?.requirements}
+          className="bg-transparent sm:text-lg min-w-0" // add global ul styles - tutorial
+        />
+      </div>
       {job?.recruiter_id !== user?.id && (
         <ApplyJobDrawer
           job={job}

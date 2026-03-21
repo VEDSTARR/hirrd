@@ -76,6 +76,7 @@ export function ApplyJobDrawer({ user, job, fetchJob, applied = false }) {
       <DrawerTrigger asChild>
         <Button
           size="lg"
+          className="w-full sm:w-auto"
           variant={job?.isOpen && !applied ? "blue" : "destructive"}
           disabled={!job?.isOpen || applied}
         >

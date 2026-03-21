@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   return (
-    <main className="flex flex-col gap-10 sm:gap-20 py-10 sm:py-20">
+    <main className="flex flex-col gap-10 sm:gap-20 py-8 sm:py-20">
       <section className="text-center ">
         <h1 className="flex flex-col items-center justify-center gradient-title font-extrabold text-4xl sm:text-6xl lg:text-8xl tracking-tighter py-4">
           Find Your Dream Job
@@ -35,14 +35,14 @@ const LandingPage = () => {
           Explore thousands of job listings or find the perfect candidate
         </p>
       </section>
-      <div className="flex gap-6 justify-center">
-        <Link to={"/jobs"}>
-          <Button variant="blue" size="xl">
+      <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-stretch sm:items-center w-full max-w-md sm:max-w-none mx-auto px-2">
+        <Link to={"/jobs"} className="w-full sm:w-auto">
+          <Button variant="blue" size="xl" className="w-full sm:w-auto">
             Find Jobs
           </Button>
         </Link>
-        <Link to={"/post-job"}>
-          <Button variant="destructive" size="xl">
+        <Link to={"/post-job"} className="w-full sm:w-auto">
+          <Button variant="destructive" size="xl" className="w-full sm:w-auto">
             Post a Job
           </Button>
         </Link>
@@ -57,7 +57,10 @@ const LandingPage = () => {
       >
         <CarouselContent className="flex gap-5 sm:gap-20 items-center">
           {companies.map(({ name, id, path }) => (
-            <CarouselItem key={id} className="basis-1/3 lg:basis-1/6 ">
+            <CarouselItem
+              key={id}
+              className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/6"
+            >
               <img
                 src={path}
                 alt={name}
@@ -68,7 +71,11 @@ const LandingPage = () => {
         </CarouselContent>
       </Carousel>
 
-      <img src="/banner.jpeg" className="w-full" />
+      <img
+        src="/banner.jpeg"
+        alt=""
+        className="w-full rounded-lg object-cover max-h-[220px] sm:max-h-none"
+      />
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Card>

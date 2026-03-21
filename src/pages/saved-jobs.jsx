@@ -27,7 +27,7 @@ const SavedJobs = () => {
 
   return (
     <div>
-      <h1 className="gradient-title font-extrabold text-6xl sm:text-7xl text-center pb-8">
+      <h1 className="gradient-title font-extrabold text-4xl sm:text-6xl md:text-7xl text-center pb-6 sm:pb-8 px-1">
         Saved Jobs
       </h1>
 

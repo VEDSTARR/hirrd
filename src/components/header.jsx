@@ -31,23 +31,35 @@ const Header = () => {
 
   return (
     <>
-      <nav className="py-4 flex justify-between items-center">
-        <Link to="/">
-          <img src="/logo.png" className="h-20" alt="Hirrd Logo" />
+      <nav className="py-3 sm:py-4 flex justify-between items-center gap-3 min-w-0">
+        <Link to="/" className="shrink-0 min-w-0">
+          <img
+            src="/logo.png"
+            className="h-11 w-auto sm:h-16 md:h-20"
+            alt="Hirrd Logo"
+          />
         </Link>
 
-        <div className="flex gap-8">
+        <div className="flex items-center gap-2 sm:gap-4 md:gap-8 shrink-0">
           <SignedOut>
-            <Button variant="outline" onClick={() => setShowSignIn(true)}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="sm:h-10 sm:px-4"
+              onClick={() => setShowSignIn(true)}
+            >
               Login
             </Button>
           </SignedOut>
           <SignedIn>
             {user?.unsafeMetadata?.role === "recruiter" && (
               <Link to="/post-job">
-                <Button variant="destructive" className="rounded-full">
-                  <PenBox size={20} className="mr-2" />
-                  Post a Job
+                <Button
+                  variant="destructive"
+                  className="rounded-full px-3 sm:px-4 text-sm sm:text-base"
+                >
+                  <PenBox size={18} className="sm:mr-2 shrink-0" />
+                  <span className="hidden sm:inline">Post a Job</span>
                 </Button>
               </Link>
             )}
@@ -78,13 +90,15 @@ const Header = () => {
 
       {showSignIn && (
         <div
-          className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4 overflow-y-auto"
           onClick={handleOverlayClick}
         >
-          <SignIn
-            signUpForceRedirectUrl="/onboarding"
-            fallbackRedirectUrl="/onboarding"
-          />
+          <div className="w-full max-w-md my-auto" onClick={(e) => e.stopPropagation()}>
+            <SignIn
+              signUpForceRedirectUrl="/onboarding"
+              fallbackRedirectUrl="/onboarding"
+            />
+          </div>
         </div>
       )}
     </>

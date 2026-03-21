@@ -67,8 +67,8 @@ const CreatedApplications = () => {
 
       {/* 🔥 Pagination */}
       {totalPages > 1 && (
-        <Pagination className="mt-6">
-          <PaginationContent>
+        <Pagination className="mt-6 max-w-full overflow-x-auto">
+          <PaginationContent className="flex-wrap justify-center gap-y-2 sm:flex-nowrap">
 
             <PaginationItem>
               <PaginationPrevious
