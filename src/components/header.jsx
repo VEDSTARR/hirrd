@@ -90,7 +90,7 @@ const Header = () => {
 
       {showSignIn && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-background/80 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[130] flex items-center justify-center overflow-y-auto bg-background/80 p-4 backdrop-blur-sm"
           onClick={handleOverlayClick}
         >
           <div

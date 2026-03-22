@@ -7,21 +7,26 @@ const MyJobs = () => {
   const { user, isLoaded } = useUser();
 
   if (!isLoaded) {
-    return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
+    return (
+      <BarLoader className="mb-4" width={"100%"} color="hsl(var(--primary))" />
+    );
   }
 
+  const isCandidate = user?.unsafeMetadata?.role === "candidate";
+
   return (
-    <div>
-      <h1 className="gradient-title font-extrabold text-4xl sm:text-6xl md:text-7xl text-center pb-6 sm:pb-8 px-1">
-        {user?.unsafeMetadata?.role === "candidate"
-          ? "My Applications"
-          : "My Jobs"}
-      </h1>
-      {user?.unsafeMetadata?.role === "candidate" ? (
-        <CreatedApplications />
-      ) : (
-        <CreatedJobs />
-      )}
+    <div className="min-w-0 space-y-6">
+      <div className="space-y-2 text-center sm:text-left">
+        <h1 className="gradient-title text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+          {isCandidate ? "My applications" : "My jobs"}
+        </h1>
+        <p className="text-muted-foreground sm:text-lg">
+          {isCandidate
+            ? "Track roles you have applied to."
+            : "Manage listings you have posted."}
+        </p>
+      </div>
+      {isCandidate ? <CreatedApplications /> : <CreatedJobs />}
     </div>
   );
 };

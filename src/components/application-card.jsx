@@ -39,7 +39,9 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
 
   return (
     <Card>
-      {loadingHiringStatus && <BarLoader width={"100%"} color="#36d7b7" />}
+      {loadingHiringStatus && (
+        <BarLoader width={"100%"} color="hsl(var(--primary))" />
+      )}
       <CardHeader>
         <CardTitle className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 font-bold">
           <span className="break-words min-w-0 pr-1">
@@ -49,8 +51,9 @@ const ApplicationCard = ({ application, isCandidate = false }) => {
           </span>
           <Download
             size={18}
-            className="bg-white text-black rounded-full h-8 w-8 p-1.5 cursor-pointer shrink-0 self-end sm:self-start"
+            className="h-8 w-8 shrink-0 cursor-pointer self-end rounded-full bg-muted p-1.5 text-foreground sm:self-start"
             onClick={handleDownload}
+            aria-label="Download resume"
           />
         </CardTitle>
       </CardHeader>

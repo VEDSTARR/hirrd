@@ -77,24 +77,25 @@ const AddCompanyDrawer = ({ fetchCompanies }) => {
         <DrawerHeader>
           <DrawerTitle>Add a New Company</DrawerTitle>
         </DrawerHeader>
-        <form className="flex gap-2 p-4 pb-0">
-          {/* Company Name */}
-          <Input placeholder="Company name" {...register("name")} />
+        <form className="flex flex-col gap-3 p-4 pb-0 sm:flex-row sm:flex-wrap sm:items-end sm:gap-2">
+          <Input
+            placeholder="Company name"
+            className="min-w-0 flex-1"
+            {...register("name")}
+          />
 
-          {/* Company Logo */}
           <Input
             type="file"
             accept="image/*"
-            className=" file:text-gray-500"
+            className="min-w-0 flex-1 file:text-muted-foreground"
             {...register("logo")}
           />
 
-          {/* Add Button */}
           <Button
             type="button"
             onClick={handleSubmit(onSubmit)}
             variant="destructive"
-            className="w-40"
+            className="w-full shrink-0 sm:w-40"
           >
             Add
           </Button>
@@ -105,7 +106,9 @@ const AddCompanyDrawer = ({ fetchCompanies }) => {
           {errorAddCompany?.message && (
             <p className="text-red-500">{errorAddCompany?.message}</p>
           )}
-          {loadingAddCompany && <BarLoader width={"100%"} color="#36d7b7" />}
+          {loadingAddCompany && (
+            <BarLoader width={"100%"} color="hsl(var(--primary))" />
+          )}
           <DrawerClose asChild>
             <Button type="button" variant="secondary">
               Cancel

@@ -4,6 +4,10 @@ import { useEffect, useState } from "react";
 import { getApplications } from "@/api/apiApplication";
 import useFetch from "@/hooks/use-fetch";
 import { BarLoader } from "react-spinners";
+import { FileText } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 import {
   Pagination,
@@ -47,12 +51,13 @@ const CreatedApplications = () => {
   );
 
   if (loadingApplications) {
-    return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
+    return (
+      <BarLoader className="mb-4" width={"100%"} color="hsl(var(--primary))" />
+    );
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      {/* Applications */}
+    <div className="flex min-w-0 flex-col gap-4">
       {selectedApplications?.length ? (
         selectedApplications.map((application) => (
           <ApplicationCard
@@ -62,7 +67,22 @@ const CreatedApplications = () => {
           />
         ))
       ) : (
-        <div>No Applications Found 😢</div>
+        <Card className="border-dashed">
+          <CardContent className="flex flex-col items-center justify-center gap-4 py-14 text-center">
+            <div className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
+              <FileText className="h-7 w-7 text-muted-foreground" />
+            </div>
+            <div>
+              <p className="text-lg font-medium">No applications yet</p>
+              <p className="mt-1 max-w-sm text-sm text-muted-foreground">
+                Find a role you like and submit an application to see it here.
+              </p>
+            </div>
+            <Button asChild>
+              <Link to="/jobs">Browse jobs</Link>
+            </Button>
+          </CardContent>
+        </Card>
       )}
 
       {/* 🔥 Pagination */}

@@ -4,6 +4,10 @@ import { useUser } from "@clerk/clerk-react";
 import { BarLoader } from "react-spinners";
 import JobCard from "./job-card";
 import { useEffect, useState } from "react";
+import { Briefcase } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 import {
   Pagination,
@@ -47,11 +51,10 @@ const CreatedJobs = () => {
   return (
     <div>
       {loadingCreatedJobs ? (
-        <BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
+        <BarLoader className="mt-4" width={"100%"} color="hsl(var(--primary))" />
       ) : (
         <>
-          {/* Jobs */}
-          <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid min-w-0 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {selectedJobs?.length ? (
               selectedJobs.map((job) => (
                 <JobCard
@@ -62,7 +65,22 @@ const CreatedJobs = () => {
                 />
               ))
             ) : (
-              <div>No Jobs Found 😢</div>
+              <Card className="col-span-full border-dashed">
+                <CardContent className="flex flex-col items-center justify-center gap-4 py-14 text-center">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
+                    <Briefcase className="h-7 w-7 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-lg font-medium">No jobs posted yet</p>
+                    <p className="mt-1 max-w-sm text-sm text-muted-foreground">
+                      Create your first listing to start receiving applicants.
+                    </p>
+                  </div>
+                  <Button asChild>
+                    <Link to="/post-job">Post a job</Link>
+                  </Button>
+                </CardContent>
+              </Card>
             )}
           </div>
 

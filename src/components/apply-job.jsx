@@ -93,7 +93,7 @@ export function ApplyJobDrawer({ user, job, fetchJob, applied = false }) {
 
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-4 p-4 pb-0"
+          className="flex max-h-[65dvh] flex-col gap-4 overflow-y-auto p-4 pb-0 sm:max-h-none"
         >
           <Input
             type="number"
@@ -119,7 +119,11 @@ export function ApplyJobDrawer({ user, job, fetchJob, applied = false }) {
             name="education"
             control={control}
             render={({ field }) => (
-              <RadioGroup onValueChange={field.onChange} {...field}>
+              <RadioGroup
+                value={field.value}
+                onValueChange={field.onChange}
+                className="flex flex-col gap-3"
+              >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="Intermediate" id="intermediate" />
                   <Label htmlFor="intermediate">Intermediate</Label>
@@ -150,7 +154,9 @@ export function ApplyJobDrawer({ user, job, fetchJob, applied = false }) {
           {errorApply?.message && (
             <p className="text-red-500">{errorApply?.message}</p>
           )}
-          {loadingApply && <BarLoader width={"100%"} color="#36d7b7" />}
+          {loadingApply && (
+            <BarLoader width={"100%"} color="hsl(var(--primary))" />
+          )}
           <Button type="submit" variant="blue" size="lg">
             Apply
           </Button>

@@ -2,6 +2,13 @@ import { getCompanies } from "@/api/apiCompanies";
 import { addNewJob } from "@/api/apiJobs";
 import AddCompanyDrawer from "@/components/add-company-drawer";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -79,7 +86,9 @@ const PostJob = () => {
   }, [isLoaded]);
 
   if (!isLoaded || loadingCompanies) {
-    return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
+    return (
+      <BarLoader className="mb-4" width={"100%"} color="hsl(var(--primary))" />
+    );
   }
 
   if (user?.unsafeMetadata?.role !== "recruiter") {
@@ -87,13 +96,26 @@ const PostJob = () => {
   }
 
   return (
-    <div>
-      <h1 className="gradient-title font-extrabold text-4xl sm:text-6xl md:text-7xl text-center pb-6 sm:pb-8 px-1">
-        Post a Job
-      </h1>
+    <div className="min-w-0 space-y-6">
+      <div className="space-y-2 text-center sm:text-left">
+        <h1 className="gradient-title px-1 pb-2 text-4xl font-extrabold tracking-tight sm:pb-4 sm:text-5xl md:text-6xl">
+          Post a job
+        </h1>
+        <p className="text-muted-foreground sm:text-lg">
+          Add details and requirements. Candidates will see this on the job page.
+        </p>
+      </div>
+      <Card className="border-border/60 bg-card/60">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg">Job details</CardTitle>
+          <CardDescription>
+            All fields are required before you can publish the role.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 p-2 sm:p-4 pb-0 min-w-0"
+        className="flex min-w-0 flex-col gap-4 pb-0"
       >
         <Input placeholder="Job Title" {...register("title")} />
         {errors.title && <p className="text-red-500">{errors.title.message}</p>}
@@ -103,13 +125,16 @@ const PostJob = () => {
           <p className="text-red-500">{errors.description.message}</p>
         )}
 
-        <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center min-w-0">
+        <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-stretch">
           <Controller
             name="location"
             control={control}
             render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger className="w-full sm:flex-1 min-w-0">
+              <Select
+                value={field.value || undefined}
+                onValueChange={field.onChange}
+              >
+                <SelectTrigger className="min-w-0 w-full sm:flex-1">
                   <SelectValue placeholder="Job Location" />
                 </SelectTrigger>
                 <SelectContent>
@@ -128,19 +153,23 @@ const PostJob = () => {
             name="company_id"
             control={control}
             render={({ field }) => (
-              <Select value={field.value} onValueChange={field.onChange}>
-                <SelectTrigger className="w-full sm:flex-1 min-w-0">
+              <Select
+                value={field.value ? String(field.value) : undefined}
+                onValueChange={field.onChange}
+              >
+                <SelectTrigger className="min-w-0 w-full sm:flex-1">
                   <SelectValue placeholder="Company">
                     {field.value
-                      ? companies?.find((com) => com.id === Number(field.value))
-                          ?.name
+                      ? companies?.find(
+                          (com) => String(com.id) === String(field.value)
+                        )?.name
                       : "Company"}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
                     {companies?.map(({ name, id }) => (
-                      <SelectItem key={name} value={id}>
+                      <SelectItem key={id} value={String(id)}>
                         {name}
                       </SelectItem>
                     ))}
@@ -149,7 +178,7 @@ const PostJob = () => {
               </Select>
             )}
           />
-          <div className="flex justify-stretch sm:justify-start shrink-0">
+          <div className="flex shrink-0 justify-stretch sm:justify-start">
             <AddCompanyDrawer fetchCompanies={fnCompanies} />
           </div>
         </div>
@@ -164,7 +193,7 @@ const PostJob = () => {
           name="requirements"
           control={control}
           render={({ field }) => (
-            <div className="w-full min-w-0 overflow-x-auto rounded-md border border-input">
+            <div className="min-w-0 w-full overflow-x-auto rounded-md border border-input [&_.w-md-editor]:min-h-[240px] sm:[&_.w-md-editor]:min-h-[320px]">
               <MDEditor value={field.value} onChange={field.onChange} />
             </div>
           )}
@@ -178,7 +207,9 @@ const PostJob = () => {
         {errorCreateJob?.message && (
           <p className="text-red-500">{errorCreateJob?.message}</p>
         )}
-        {loadingCreateJob && <BarLoader width={"100%"} color="#36d7b7" />}
+        {loadingCreateJob && (
+          <BarLoader width={"100%"} color="hsl(var(--primary))" />
+        )}
         <Button
           type="submit"
           variant="blue"
@@ -188,6 +219,8 @@ const PostJob = () => {
           Submit
         </Button>
       </form>
+        </CardContent>
+      </Card>
     </div>
   );
 };

@@ -91,11 +91,11 @@ const LandingPage = () => {
           ]}
           className="w-full"
         >
-          <CarouselContent className="flex items-center gap-6 sm:gap-12">
+          <CarouselContent>
             {companies.map(({ name, id, path }) => (
               <CarouselItem
                 key={id}
-                className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/6"
+                className="basis-[45%] sm:basis-1/3 md:basis-1/4 lg:basis-1/6"
               >
                 <img
                   src={path}

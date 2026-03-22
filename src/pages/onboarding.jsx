@@ -31,15 +31,17 @@ const Onboarding = () => {
   }, [user]);
 
   if (!isLoaded) {
-    return <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />;
+    return (
+      <BarLoader className="mb-4" width={"100%"} color="hsl(var(--primary))" />
+    );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center mt-12 sm:mt-24 md:mt-40 px-2">
-      <h2 className="gradient-title font-extrabold text-4xl sm:text-6xl md:text-8xl tracking-tighter text-center">
-        I am a...
+    <div className="mt-12 flex flex-col items-center justify-center px-2 sm:mt-24 md:mt-32">
+      <h2 className="gradient-title text-center text-4xl font-extrabold tracking-tighter sm:text-6xl md:text-7xl">
+        I am a…
       </h2>
-      <div className="mt-8 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-lg sm:max-w-none md:px-40">
+      <div className="mt-8 grid w-full max-w-lg grid-cols-1 gap-4 sm:mt-12 sm:max-w-2xl sm:grid-cols-2">
         <Button
           variant="blue"
           className="h-28 sm:h-36 text-xl sm:text-2xl"

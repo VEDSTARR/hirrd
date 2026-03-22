@@ -132,7 +132,7 @@ const JobListing = () => {
 
           <div className="flex flex-col gap-2 min-w-0 sm:flex-row sm:flex-wrap">
             <Select
-              value={location}
+              value={location || undefined}
               onValueChange={(v) => {
                 setLocation(v);
                 setCurrentPage(1);
@@ -153,7 +153,7 @@ const JobListing = () => {
             </Select>
 
             <Select
-              value={company_id}
+              value={company_id || undefined}
               onValueChange={(v) => {
                 setCompany_id(v);
                 setCurrentPage(1);

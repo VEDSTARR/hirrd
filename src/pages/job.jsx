@@ -33,8 +33,9 @@ const JobPage = () => {
   });
 
   useEffect(() => {
-    if (isLoaded) fnJob();
-  }, [isLoaded]);
+    if (isLoaded && id) fnJob();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- refetch when route id changes
+  }, [isLoaded, id]);
 
   const { loading: loadingHiringStatus, fn: fnHiringStatus } = useFetch(
     updateHiringStatus,
@@ -99,7 +100,10 @@ const JobPage = () => {
       </Card>
 
       {job?.recruiter_id === user?.id && (
-        <Select onValueChange={handleStatusChange}>
+        <Select
+          value={job?.isOpen ? "open" : "closed"}
+          onValueChange={handleStatusChange}
+        >
           <SelectTrigger
             className={`w-full rounded-lg border-border/60 ${
               job?.isOpen
