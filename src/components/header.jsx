@@ -31,8 +31,8 @@ const Header = () => {
 
   return (
     <>
-      <nav className="py-3 sm:py-4 flex justify-between items-center gap-3 min-w-0">
-        <Link to="/" className="shrink-0 min-w-0">
+      <nav className="flex min-w-0 items-center justify-between gap-3 py-3 sm:py-4">
+        <Link to="/" className="min-w-0 shrink-0 transition-opacity hover:opacity-90">
           <img
             src="/logo.png"
             className="h-11 w-auto sm:h-16 md:h-20"
@@ -40,7 +40,7 @@ const Header = () => {
           />
         </Link>
 
-        <div className="flex items-center gap-2 sm:gap-4 md:gap-8 shrink-0">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-4 md:gap-6">
           <SignedOut>
             <Button
               variant="outline"
@@ -55,10 +55,10 @@ const Header = () => {
             {user?.unsafeMetadata?.role === "recruiter" && (
               <Link to="/post-job">
                 <Button
-                  variant="destructive"
-                  className="rounded-full px-3 sm:px-4 text-sm sm:text-base"
+                  size="sm"
+                  className="rounded-full px-3 text-sm sm:px-4 sm:text-base"
                 >
-                  <PenBox size={18} className="sm:mr-2 shrink-0" />
+                  <PenBox size={18} className="shrink-0 sm:mr-2" />
                   <span className="hidden sm:inline">Post a Job</span>
                 </Button>
               </Link>
@@ -66,7 +66,7 @@ const Header = () => {
             <UserButton
               appearance={{
                 elements: {
-                  avatarBox: "w-10 h-10",
+                  avatarBox: "h-10 w-10 ring-2 ring-border",
                 },
               }}
             >
@@ -90,10 +90,13 @@ const Header = () => {
 
       {showSignIn && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 p-4 overflow-y-auto"
+          className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-background/80 p-4 backdrop-blur-sm"
           onClick={handleOverlayClick}
         >
-          <div className="w-full max-w-md my-auto" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="my-auto w-full max-w-md rounded-xl border border-border/60 bg-card p-1 shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <SignIn
               signUpForceRedirectUrl="/onboarding"
               fallbackRedirectUrl="/onboarding"

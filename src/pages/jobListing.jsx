@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { State } from "country-state-city";
 import { BarLoader } from "react-spinners";
+import { Briefcase } from "lucide-react";
 import useFetch from "@/hooks/use-fetch";
 
 import JobCard from "@/components/job-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 import {
   Select,
@@ -61,7 +63,6 @@ const JobListing = () => {
     if (isLoaded) fnJobs();
   }, [isLoaded, location, company_id, searchQuery]);
 
-  // 🔥 Pagination Logic
   const totalPages = Math.ceil((jobs?.length || 0) / JOBS_PER_PAGE);
 
   const startIndex = (currentPage - 1) * JOBS_PER_PAGE;
@@ -76,7 +77,7 @@ const JobListing = () => {
     const query = formData.get("search-query");
     if (query) {
       setSearchQuery(query);
-      setCurrentPage(1); // reset page
+      setCurrentPage(1);
     }
   };
 
@@ -88,91 +89,108 @@ const JobListing = () => {
   };
 
   if (!isLoaded) {
-    return <BarLoader width={"100%"} color="#36d7b7" />;
+    return <BarLoader width={"100%"} color="hsl(var(--primary))" />;
   }
 
   return (
-    <div>
-      <h1 className="gradient-title font-extrabold text-4xl sm:text-6xl md:text-7xl text-center pb-6 sm:pb-8 px-1">
-        Latest Jobs
-      </h1>
-
-      {/* 🔍 Search */}
-      <form
-        onSubmit={handleSearch}
-        className="flex flex-col sm:flex-row sm:h-14 gap-2 items-stretch sm:items-center mb-3"
-      >
-        <Input
-          type="text"
-          placeholder="Search Jobs by Title.."
-          name="search-query"
-          className="h-12 sm:h-full flex-1 min-w-0 px-4 text-md"
-        />
-        <Button
-          type="submit"
-          className="h-12 sm:h-full w-full sm:w-28 shrink-0"
-          variant="blue"
-        >
-          Search
-        </Button>
-      </form>
-
-      {/* 🎯 Filters */}
-      <div className="flex flex-col sm:flex-row gap-2 min-w-0">
-        <Select value={location} onValueChange={(v) => {
-          setLocation(v);
-          setCurrentPage(1);
-        }}>
-          <SelectTrigger>
-            <SelectValue placeholder="Filter by Location" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {State.getStatesOfCountry("IN").map(({ name }) => (
-                <SelectItem key={name} value={name}>
-                  {name}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-
-        <Select value={company_id} onValueChange={(v) => {
-          setCompany_id(v);
-          setCurrentPage(1);
-        }}>
-          <SelectTrigger>
-            <SelectValue placeholder="Filter by Company" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              {companies?.map(({ name, id }) => (
-                <SelectItem key={id} value={id}>
-                  {name}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-
-        <Button
-          variant="destructive"
-          onClick={clearFilters}
-          className="w-full sm:w-auto shrink-0"
-        >
-          Clear Filters
-        </Button>
+    <div className="space-y-8">
+      <div className="space-y-2 text-center sm:text-left">
+        <h1 className="gradient-title text-balance pb-1 text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
+          Latest jobs
+        </h1>
+        <p className="text-muted-foreground sm:text-lg">
+          Search and filter roles that match your next move.
+        </p>
       </div>
 
-      {/* ⏳ Loader */}
+      <Card className="border-border/60 bg-card/60">
+        <CardHeader className="pb-4">
+          <CardTitle className="text-lg">Search & filters</CardTitle>
+          <CardDescription>
+            Refine by title, state, or company—results update as you go.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <form
+            onSubmit={handleSearch}
+            className="flex flex-col gap-2 sm:h-12 sm:flex-row sm:items-stretch"
+          >
+            <Input
+              type="text"
+              placeholder="Search by job title…"
+              name="search-query"
+              className="h-12 flex-1 min-w-0 rounded-lg border-border/60 bg-background/80 px-4 text-base"
+            />
+            <Button
+              type="submit"
+              className="h-12 w-full shrink-0 sm:w-32"
+              variant="blue"
+            >
+              Search
+            </Button>
+          </form>
+
+          <div className="flex flex-col gap-2 min-w-0 sm:flex-row sm:flex-wrap">
+            <Select
+              value={location}
+              onValueChange={(v) => {
+                setLocation(v);
+                setCurrentPage(1);
+              }}
+            >
+              <SelectTrigger className="h-11 w-full rounded-lg border-border/60 bg-background/80 sm:min-w-[200px] sm:flex-1">
+                <SelectValue placeholder="Filter by location" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {State.getStatesOfCountry("IN").map(({ name }) => (
+                    <SelectItem key={name} value={name}>
+                      {name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+            <Select
+              value={company_id}
+              onValueChange={(v) => {
+                setCompany_id(v);
+                setCurrentPage(1);
+              }}
+            >
+              <SelectTrigger className="h-11 w-full rounded-lg border-border/60 bg-background/80 sm:min-w-[200px] sm:flex-1">
+                <SelectValue placeholder="Filter by company" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {companies?.map(({ name, id }) => (
+                    <SelectItem key={id} value={id}>
+                      {name}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+            <Button
+              variant="outline"
+              onClick={clearFilters}
+              className="h-11 w-full shrink-0 border-destructive/40 text-destructive hover:bg-destructive/10 hover:text-destructive sm:w-auto"
+            >
+              Clear filters
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       {loadingJobs && (
-        <BarLoader className="mt-4" width={"100%"} color="#36d7b7" />
+        <BarLoader width={"100%"} color="hsl(var(--primary))" />
       )}
 
-      {/* 📦 Jobs */}
       {!loadingJobs && (
         <>
-          <div className="mt-8 grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {selectedJobs?.length ? (
               selectedJobs.map((job) => (
                 <JobCard
@@ -182,15 +200,27 @@ const JobListing = () => {
                 />
               ))
             ) : (
-              <div>No Jobs Found 😢</div>
+              <Card className="col-span-full border-dashed">
+                <CardContent className="flex flex-col items-center justify-center gap-3 py-14 text-center">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-full bg-muted">
+                    <Briefcase className="h-7 w-7 text-muted-foreground" />
+                  </div>
+                  <p className="text-lg font-medium">No jobs found</p>
+                  <p className="max-w-sm text-sm text-muted-foreground">
+                    Try another search term or clear filters to see all open
+                    roles.
+                  </p>
+                  <Button variant="outline" size="sm" onClick={clearFilters}>
+                    Reset filters
+                  </Button>
+                </CardContent>
+              </Card>
             )}
           </div>
 
-          {/* 🔥 Pagination UI */}
           {totalPages > 1 && (
             <Pagination className="mt-8 max-w-full overflow-x-auto">
               <PaginationContent className="flex-wrap justify-center gap-y-2 sm:flex-nowrap">
-
                 <PaginationItem>
                   <PaginationPrevious
                     onClick={() =>
@@ -219,7 +249,6 @@ const JobListing = () => {
                     }
                   />
                 </PaginationItem>
-
               </PaginationContent>
             </Pagination>
           )}
