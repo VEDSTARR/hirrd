@@ -6,7 +6,7 @@ const AppLayout = () => {
   return (
     <div className="min-w-0 overflow-x-hidden">
       <div className="grid-background" aria-hidden />
-      <div className="sticky top-0 z-40 border-b border-border/40 bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/70">
+      <div className="sticky top-0 z-40 border-b border-border/40 bg-background/95">
         <div className="container max-w-full">
           <Header />
         </div>

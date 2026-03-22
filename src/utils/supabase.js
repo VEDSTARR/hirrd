@@ -4,12 +4,13 @@ export const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
 
 const supabaseClient = async (supabaseAccessToken) => {
-  const supabase = createClient(supabaseUrl, supabaseKey, {
-    global: { headers: { Authorization: `Bearer ${supabaseAccessToken}` } },
-  });
-  // set Supabase JWT on the client object,
-  // so it is sent up with all Supabase requests
-  return supabase;
+  const options = {};
+  if (supabaseAccessToken) {
+    options.global = {
+      headers: { Authorization: `Bearer ${supabaseAccessToken}` },
+    };
+  }
+  return createClient(supabaseUrl, supabaseKey, options);
 };
 
 export default supabaseClient;

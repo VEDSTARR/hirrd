@@ -13,14 +13,28 @@ const useFetch = (cb, options = {}) => {
     setError(null);
 
     try {
-      const supabaseAccessToken = await session.getToken({
-        template: "supabase",
-      });
+      let supabaseAccessToken = null;
+
+      if (session) {
+        try {
+          supabaseAccessToken = await session.getToken({
+            template: "supabase",
+          });
+        } catch {
+          try {
+            supabaseAccessToken = await session.getToken();
+          } catch {
+            supabaseAccessToken = null;
+          }
+        }
+      }
+
       const response = await cb(supabaseAccessToken, options, ...args);
       setData(response);
       setError(null);
-    } catch (error) {
-      setError(error);
+    } catch (err) {
+      console.error("useFetch:", err);
+      setError(err);
     } finally {
       setLoading(false);
     }

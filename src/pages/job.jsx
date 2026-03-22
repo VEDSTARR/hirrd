@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { BarLoader } from "react-spinners";
 import MDEditor from "@uiw/react-md-editor";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
+import { Button } from "@/components/ui/button";
 import { Briefcase, DoorClosed, DoorOpen, MapPinIcon } from "lucide-react";
 
 import {
@@ -140,13 +141,18 @@ const JobPage = () => {
           className="bg-transparent sm:text-lg min-w-0" // add global ul styles - tutorial
         />
       </div>
-      {job?.recruiter_id !== user?.id && (
+      {user && job?.recruiter_id !== user?.id && (
         <ApplyJobDrawer
           job={job}
           user={user}
           fetchJob={fnJob}
           applied={job?.applications?.find((ap) => ap.candidate_id === user.id)}
         />
+      )}
+      {!user && job?.isOpen && (
+        <Button asChild size="lg" className="w-full sm:w-auto">
+          <Link to="/?sign-in=true">Sign in to apply</Link>
+        </Button>
       )}
       {loadingHiringStatus && (
         <BarLoader width={"100%"} color="hsl(var(--primary))" />

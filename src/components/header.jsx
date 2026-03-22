@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link, useSearchParams } from "react-router-dom";
 import {
   SignedIn,
@@ -7,6 +8,7 @@ import {
   SignIn,
   useUser,
 } from "@clerk/clerk-react";
+import { dark } from "@clerk/themes";
 import { Button } from "./ui/button";
 import { BriefcaseBusiness, Heart, PenBox } from "lucide-react";
 
@@ -22,17 +24,53 @@ const Header = () => {
     }
   }, [search]);
 
+  const closeSignIn = () => {
+    setShowSignIn(false);
+    setSearch({});
+  };
+
   const handleOverlayClick = (e) => {
     if (e.target === e.currentTarget) {
-      setShowSignIn(false);
-      setSearch({});
+      closeSignIn();
     }
   };
+
+  const signInModal =
+    showSignIn &&
+    createPortal(
+      <div
+        className="fixed inset-0 z-[200] flex min-h-0 items-center justify-center overflow-y-auto bg-black/70 p-4 sm:p-6"
+        role="dialog"
+        aria-modal="true"
+        onClick={handleOverlayClick}
+      >
+        <div
+          className="relative my-auto w-full max-w-[100vw] sm:max-w-[440px]"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <SignIn
+            appearance={{
+              baseTheme: dark,
+              elements: {
+                rootBox: "mx-auto w-full",
+                card: "shadow-2xl",
+              },
+            }}
+            signUpForceRedirectUrl="/onboarding"
+            fallbackRedirectUrl="/onboarding"
+          />
+        </div>
+      </div>,
+      document.body
+    );
 
   return (
     <>
       <nav className="flex min-w-0 items-center justify-between gap-3 py-3 sm:py-4">
-        <Link to="/" className="min-w-0 shrink-0 transition-opacity hover:opacity-90">
+        <Link
+          to="/"
+          className="min-w-0 shrink-0 transition-opacity hover:opacity-90"
+        >
           <img
             src="/logo.png"
             className="h-11 w-auto sm:h-16 md:h-20"
@@ -88,22 +126,7 @@ const Header = () => {
         </div>
       </nav>
 
-      {showSignIn && (
-        <div
-          className="fixed inset-0 z-[130] flex items-center justify-center overflow-y-auto bg-background/80 p-4 backdrop-blur-sm"
-          onClick={handleOverlayClick}
-        >
-          <div
-            className="my-auto w-full max-w-md rounded-xl border border-border/60 bg-card p-1 shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <SignIn
-              signUpForceRedirectUrl="/onboarding"
-              fallbackRedirectUrl="/onboarding"
-            />
-          </div>
-        </div>
-      )}
+      {signInModal}
     </>
   );
 };

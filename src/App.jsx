@@ -32,11 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/jobs",
-        element: (
-          <ProtectedRoute>
-            <JobListing />
-          </ProtectedRoute>
-        ),
+        element: <JobListing />,
       },
       {
         path: "/post-job",
@@ -64,11 +60,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/job/:id",
-        element: (
-          <ProtectedRoute>
-            <JobPage />
-          </ProtectedRoute>
-        ),
+        element: <JobPage />,
       },
     ],
   },

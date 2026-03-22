@@ -13,7 +13,7 @@ import { Badge } from "./ui/badge";
 import { Link } from "react-router-dom";
 import useFetch from "@/hooks/use-fetch";
 import { deleteJob, saveJob } from "@/api/apiJobs";
-import { useUser } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, useUser } from "@clerk/clerk-react";
 import { useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
 
@@ -38,6 +38,7 @@ const JobCard = ({
   } = useFetch(saveJob);
 
   const handleSaveJob = async () => {
+    if (!user?.id) return;
     await fnSavedJob({
       user_id: user.id,
       job_id: job.id,
@@ -107,20 +108,31 @@ const JobCard = ({
           </Button>
         </Link>
         {!isMyJob && (
-          <Button
-            variant="outline"
-            size="icon"
-            className="shrink-0"
-            onClick={handleSaveJob}
-            disabled={loadingSavedJob}
-            aria-label={saved ? "Unsave job" : "Save job"}
-          >
-            {saved ? (
-              <Heart size={18} className="fill-primary text-primary" />
-            ) : (
-              <Heart size={18} />
-            )}
-          </Button>
+          <>
+            <SignedIn>
+              <Button
+                variant="outline"
+                size="icon"
+                className="shrink-0"
+                onClick={handleSaveJob}
+                disabled={loadingSavedJob}
+                aria-label={saved ? "Unsave job" : "Save job"}
+              >
+                {saved ? (
+                  <Heart size={18} className="fill-primary text-primary" />
+                ) : (
+                  <Heart size={18} />
+                )}
+              </Button>
+            </SignedIn>
+            <SignedOut>
+              <Button variant="outline" size="sm" className="shrink-0" asChild>
+                <Link to="/?sign-in=true" aria-label="Sign in to save jobs">
+                  Save
+                </Link>
+              </Button>
+            </SignedOut>
+          </>
         )}
       </CardFooter>
     </Card>
