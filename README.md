@@ -54,7 +54,9 @@ VITE_CLERK_PUBLISHABLE_KEY=
 
 
 ## How to Run:
-1. Clone the repository - https://github.com/kunal-lagad/hirrd.git
+1. Clone the repository
+   ```bash
+   git clone https://github.com/kunal-lagad/hirrd.git
 2. Install the required dependencies:
    ```bash
    npm install
